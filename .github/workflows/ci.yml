@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build and run unit tests
+        run: |
+          g++ -std=c++17 -O2 -Wall -Wextra -Werror -Iinclude tests/cache_tests.cpp -o cache_tests
+          ./cache_tests
+      - name: Build and run benchmark
+        run: |
+          g++ -std=c++17 -O2 -Wall -Wextra -Werror -Iinclude src/benchmark.cpp -o benchmark
+          ./benchmark
